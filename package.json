@@ -1,0 +1,30 @@
+{
+  "name": "markdown-toc-cli",
+  "main": "./lib/markdown-toc-cli",
+  "bin": "./bin/markdown-toc-cli",
+  "version": "0.4.2-0",
+  "description": "Generate TOC (table of contents) of headlines from parsed markdown file",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krumedia/markdown-toc-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/krumedia/markdown-toc-cli/issues"
+  },
+  "homepage": "https://github.com/krumedia/markdown-toc-cli",
+  "license": "MIT",
+  "dependencies": {
+    "text-buffer": "^13.11.8"
+  },
+  "engines": {
+    "node": ">=8.9.4"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.2.2"
+  },
+  "scripts": {
+    "build": "node_modules/.bin/coffee -b -o lib markdown-toc/lib/Toc.coffee && node_modules/.bin/coffee -b -o lib src",
+    "prepare": "npm run build",
+    "groff": "groff -Kutf8 -mandoc -Tutf8 -P -cbdu man/markdown-toc-cli.1 > man/markdown-toc-cli.1.txt"
+  }
+}

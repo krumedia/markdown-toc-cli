@@ -1,0 +1,85 @@
+markdown-toc-cli(1)           markdown-toc-cli.js          markdown-toc-cli(1)
+
+
+
+NAME
+       markdown-toc-cli  -  Generate TOC (table of contents) of headlines from
+       parsed markdown file
+
+
+SYNOPSIS
+       markdown-toc-cli [--help] [-o <output>] [--stdout]  [--update]  [--cre‐
+       ate] [--delete] [--toggle] [-i <input>] [filename]
+
+
+DESCRIPTION
+       markdown-toc-cli  Generate  and  update  magically  a table of contents
+       based on the headlines of a parsed markdown.
+
+
+FEATURES
+       Auto linking via anchor tags
+
+       Depth control [1-6]
+
+       Enable or disable links
+
+       Use ordered list (1. ..., 2. ...)
+
+
+EXAMPLES
+       TODO
+
+
+OPTIONS
+       -o, --output [output]
+              Specify file output. If none is specified, write  to  the  input
+              file in place.
+
+       --stdout
+              Write the output to stdout instead of updating the input file.
+
+       -i, --input [input]
+              Specify  file  input, otherwise use last argument as input file.
+              If no input file is specified, read from stdin.
+
+       --update
+              Update a given TOC (default)
+
+       --create
+              Enable GFM line breaks. Only works with the gfm option.
+
+       --delete
+              Enable GFM tables. Only works with the gfm option.
+
+       --toggle
+              Sanitize output. Ignore any HTML input.
+
+       -h, --help
+              Display help information.
+
+
+CONFIGURATION
+       For configuring and running programmatically.
+
+       Example
+
+           require('markdown-toc-cli')('*foo*', 'update');
+
+
+BUGS
+       Please report any bugs to https://github.com/blaimi/markdown-toc-cli.
+
+
+LICENSE
+       Copyright (c) 2011-2014, Christopher Jeffrey (MIT License).   Copyright
+       (c)  2014-2018,  Darius  Morawiec  (MIT  License).  Copyright (c) 2018,
+       Matthias Blümel (MIT License).
+
+
+SEE ALSO
+       markdown(1), node.js(1)
+
+
+
+v0.4.2-0                          2018-02-20               markdown-toc-cli(1)

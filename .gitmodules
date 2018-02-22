@@ -1,0 +1,3 @@
+[submodule "markdown-toc"]
+	path = markdown-toc
+	url = https://github.com/nok/markdown-toc.git

@@ -1,0 +1,75 @@
+.ds q \N'34'
+.TH markdown-toc-cli 1 "2018-02-20" "v0.4.2-0" "markdown-toc-cli.js"
+
+.SH NAME
+markdown-toc-cli \- Generate TOC (table of contents) of headlines from parsed markdown file
+
+.SH SYNOPSIS
+.B markdown-toc-cli
+[\-\-help]
+[\-o \fI<output>\fP] [\-\-stdout]
+[\-\-update] [\-\-create] [\-\-delete] [\-\-toggle]
+[\-i \fI<input>\fP] [\fIfilename\fP]
+
+.SH DESCRIPTION
+.B markdown-toc-cli
+Generate and update magically a table of contents based on the headlines of a parsed markdown.
+
+.SH FEATURES
+.TP
+Auto linking via anchor tags
+.TP
+Depth control [1-6]
+.TP
+Enable or disable links
+.TP
+Use ordered list (1. ..., 2. ...)
+
+.SH EXAMPLES
+TODO
+
+.SH OPTIONS
+.TP
+.BI \-o,\ \-\-output\ [\fIoutput\fP]
+Specify file output. If none is specified, write to the input file in place.
+.TP
+.BI \-\-stdout
+Write the output to stdout instead of updating the input file.
+.TP
+.BI \-i,\ \-\-input\ [\fIinput\fP]
+Specify file input, otherwise use last argument as input file. If no input file
+is specified, read from stdin.
+.TP
+.BI \-\-update
+Update a given TOC (default)
+.TP
+.BI \-\-create
+Enable GFM line breaks. Only works with the gfm option.
+.TP
+.BI \-\-delete
+Enable GFM tables. Only works with the gfm option.
+.TP
+.BI \-\-toggle
+Sanitize output. Ignore any HTML input.
+.TP
+.BI \-h,\ \-\-help
+Display help information.
+
+.SH CONFIGURATION
+For configuring and running programmatically.
+
+.B Example
+
+    require('markdown-toc-cli')('*foo*', 'update');
+
+.SH BUGS
+Please report any bugs to https://github.com/blaimi/markdown-toc-cli.
+
+.SH LICENSE
+Copyright (c) 2011-2014, Christopher Jeffrey (MIT License).
+Copyright (c) 2014-2018, Darius Morawiec (MIT License).
+Copyright (c) 2018, Matthias Blümel (MIT License).
+
+.SH "SEE ALSO"
+.BR markdown(1),
+.BR node.js(1)

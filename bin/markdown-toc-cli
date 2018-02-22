@@ -1,0 +1,171 @@
+#!/usr/bin/env node
+
+/**
+ * Markdown TOC CLI
+ * Copyright (c) 2011-2013, Christopher Jeffrey (MIT License)
+ * Copyright (c) 2018, krumedia GmbH (MIT License)
+ */
+
+var fs = require('fs')
+  , markdowntoccli = require('../');
+
+/**
+ * Man Page
+ */
+
+function help() {
+  var spawn = require('child_process').spawn;
+
+  var options = {
+    cwd: process.cwd(),
+    env: process.env,
+    setsid: false,
+    customFds: [0, 1, 2]
+  };
+
+  spawn('man', [__dirname + '/../man/markdown-toc-cli.1'], options)
+    .on('error', function(err) {
+      fs.readFile(__dirname + '/../man/markdown-toc-cli.1.txt', 'utf8', function(err, data) {
+        if (err) throw err;
+        console.log(data);
+      });
+    });
+}
+
+/**
+ * Main
+ */
+
+function main(argv, callback) {
+  var files = []
+    , mode = 'update'
+    , output
+    ;
+
+  function getarg() {
+    var arg = argv.shift();
+
+    if (arg.indexOf('--') === 0) {
+      // e.g. --opt
+      arg = arg.split('=');
+      if (arg.length > 1) {
+        // e.g. --opt=val
+        argv.unshift(arg.slice(1).join('='));
+      }
+      arg = arg[0];
+    } else if (arg[0] === '-') {
+      if (arg.length > 2) {
+        // e.g. -abc
+        argv = arg.substring(1).split('').map(function(ch) {
+          return '-' + ch;
+        }).concat(argv);
+        arg = argv.shift();
+      } else {
+        // e.g. -a
+      }
+    } else {
+      // e.g. foo
+    }
+
+    return arg;
+  }
+
+  while (argv.length) {
+    arg = getarg();
+    switch (arg) {
+      case '-h':
+      case '--help':
+      	return help();
+      case '--test':
+        return require('../test').main(process.argv.slice());
+      case '-o':
+      case '--output':
+        output = argv.shift();
+        break;
+      case '-i':
+      case '--input':
+        input = argv.shift();
+        break;
+      default:
+        // for update, delete, create, toggle
+        if (arg.indexOf('--') === 0) {
+          mode = camelize(arg.replace(/^--/, ''));
+        } else {
+          files.push(arg);
+        }
+        break;
+    }
+  }
+
+  function getData(callback) {
+    if (!input) {
+      if (files.length <= 2) {
+        return getStdin(callback);
+      }
+      input = files.pop();
+    }
+    return fs.readFile(input, 'utf8', callback);
+  }
+
+  return getData(function(err, data) {
+    if (err) return callback(err);
+
+    data = markdowntoccli(data, mode,{});
+
+    if (!output) {
+      process.stdout.write(data + '\n');
+      return callback();
+    }
+
+    return fs.writeFile(output, data, callback);
+  });
+}
+
+/**
+ * Helpers
+ */
+
+function getStdin(callback) {
+  var stdin = process.stdin
+    , buff = '';
+
+  stdin.setEncoding('utf8');
+
+  stdin.on('data', function(data) {
+    buff += data;
+  });
+
+  stdin.on('error', function(err) {
+    return callback(err);
+  });
+
+  stdin.on('end', function() {
+    return callback(null, buff);
+  });
+
+  try {
+    stdin.resume();
+  } catch (e) {
+    callback(e);
+  }
+}
+
+function camelize(text) {
+  return text.replace(/(\w)-(\w)/g, function(_, a, b) {
+    return a + b.toUpperCase();
+  });
+}
+
+/**
+ * Expose / Entry Point
+ */
+
+if (!module.parent) {
+  process.title = 'marked';
+  main(process.argv.slice(), function(err, code) {
+    if (err) throw err;
+    return process.exit(code || 0);
+  });
+} else {
+  module.exports = main;
+}
