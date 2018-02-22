@@ -1,5 +1,5 @@
 {
-  "name": "markdown-toc-cli",
+  "name": "@krumedia/markdown-toc-cli",
   "main": "./lib/markdown-toc-cli",
   "bin": "./bin/markdown-toc-cli",
   "version": "0.4.2-0",
