@@ -2,7 +2,7 @@
   "name": "@krumedia/markdown-toc-cli",
   "main": "./lib/markdown-toc-cli",
   "bin": "./bin/markdown-toc-cli",
-  "version": "0.4.2-0",
+  "version": "0.4.2-1",
   "description": "Generate TOC (table of contents) of headlines from parsed markdown file",
   "repository": {
     "type": "git",
