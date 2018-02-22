@@ -32,7 +32,7 @@ see [manpage](man/markdown-toc-cli.1.txt)
 ## Installation
 
 ```bash
-npm install markdown-toc-cli
+npm install @krumedia/markdown-toc-cli
 ```
 
 ## Features
